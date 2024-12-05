@@ -1,0 +1,292 @@
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.02 sec)
+
+mysql> create database school;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| school             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use school;
+Database changed
+mysql> create table studentdetails(name varchar(30),id int not null primary key,address varchar(30),marks int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc studentdetails;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into studentdetails(marks,id,name,address)values(78,12,'rani','hyderabad');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into studentdetails(98,2,'payal','hyderabad');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '98,2,'payal','hyderabad')' at line 1
+mysql> insert into studentdetails values(98,2,'payal','orrisa')
+    -> insert into studentdetails values(100,1,'jyoti','rajasthan')
+    ->
+    ->  insert into studentdetails values(98,2,'payal','orrisa');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'insert into studentdetails values(100,1,'jyoti','rajasthan')
+
+ insert into stude' at line 2
+mysql> insert into studentdetails values(98,2,'payal ji','orrisa');
+ERROR 1366 (HY000): Incorrect integer value: 'orrisa' for column 'marks' at row 1
+mysql> insert into studentdetails values('payal',98,'orrisa',100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into studentdetails values('jyoti',1,'rajasthan',100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from studentdetails;
++-------+----+-----------+-------+
+| name  | id | address   | marks |
++-------+----+-----------+-------+
+| jyoti |  1 | rajasthan |   100 |
+| rani  | 12 | hyderabad |    78 |
+| payal | 98 | orrisa    |   100 |
++-------+----+-----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select name from studentdetails;
++-------+
+| name  |
++-------+
+| jyoti |
+| rani  |
+| payal |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select id from studentdetails;
++----+
+| id |
++----+
+|  1 |
+| 12 |
+| 98 |
++----+
+3 rows in set (0.00 sec)
+
+mysql> select name from studentdetails where id=12;
++------+
+| name |
++------+
+| rani |
++------+
+1 row in set (0.00 sec)
+
+mysql> update studentdetails set address='hyderabad' where id=98;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from studentdetails
+    -> ;
++-------+----+-----------+-------+
+| name  | id | address   | marks |
++-------+----+-----------+-------+
+| jyoti |  1 | rajasthan |   100 |
+| rani  | 12 | hyderabad |    78 |
+| payal | 98 | hyderabad |   100 |
++-------+----+-----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table studentdetails add phoneno int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from studentdetails;
++-------+----+-----------+-------+---------+
+| name  | id | address   | marks | phoneno |
++-------+----+-----------+-------+---------+
+| jyoti |  1 | rajasthan |   100 |    NULL |
+| rani  | 12 | hyderabad |    78 |    NULL |
+| payal | 98 | hyderabad |   100 |    NULL |
++-------+----+-----------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> update studentdetails set phoneno=1234567890 where id=12;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *
+    -> ;
+ERROR 1096 (HY000): No tables used
+mysql> desc studentdetails;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| phoneno | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table sstudentdetails modify column name varchar(60);
+ERROR 1146 (42S02): Table 'school.sstudentdetails' doesn't exist
+mysql> alter table studentdetails modify column name varchar(60);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc studentdetails;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(60) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| phoneno | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table studentdetails drop column phoneno;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from studentdetails;
++-------+----+-----------+-------+
+| name  | id | address   | marks |
++-------+----+-----------+-------+
+| jyoti |  1 | rajasthan |   100 |
+| rani  | 12 | hyderabad |    78 |
+| payal | 98 | hyderabad |   100 |
++-------+----+-----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> delete from studentdetails where id=12;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from studentdetails;
++-------+----+-----------+-------+
+| name  | id | address   | marks |
++-------+----+-----------+-------+
+| jyoti |  1 | rajasthan |   100 |
+| payal | 98 | hyderabad |   100 |
++-------+----+-----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select sum(marks) from studentdetails;
++------------+
+| sum(marks) |
++------------+
+|        200 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(marks) from studentdetails;
++------------+
+| avg(marks) |
++------------+
+|   100.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select name,marks from studentdetails ;
++-------+-------+
+| name  | marks |
++-------+-------+
+| jyoti |   100 |
+| payal |   100 |
++-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from studentdetails order by id;
++-------+----+-----------+-------+
+| name  | id | address   | marks |
++-------+----+-----------+-------+
+| jyoti |  1 | rajasthan |   100 |
+| payal | 98 | hyderabad |   100 |
++-------+----+-----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into studentdetails ('rani',2,'hyderabad',25)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''rani',2,'hyderabad',25)' at line 1
+mysql>  insert into studentdetails values('rani',2,'hyderabad',25);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from studentdetails group by address='hyderabad';
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'school.studentdetails.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> create table fathername(id int,fathername varchar(30),fees int);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into fathername values(1,'ashok kumar',23000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into fathername values(98,'babaji charandas,300000);
+    '> ;
+    '> ;
+    '> ');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into fathername values(98,'babaji charandas',30000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into fathername values(2,'heera kumar bharti',28000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from fathername;
++------+--------------------+-------+
+| id   | fathername         | fees  |
++------+--------------------+-------+
+|    1 | ashok kumar        | 23000 |
+|   98 | babaji charandas   | 30000 |
+|    2 | heera kumar bharti | 28000 |
++------+--------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from studentdetails
+    -> ;
++-------+----+-----------+-------+
+| name  | id | address   | marks |
++-------+----+-----------+-------+
+| jyoti |  1 | rajasthan |   100 |
+| rani  |  2 | hyderabad |    25 |
+| payal | 98 | hyderabad |   100 |
++-------+----+-----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into studentdetails values('priyanka',3,'bihar',88)
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from studentdetails innerjoin fathername on studentdetails.id=fathername.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'fathername on studentdetails.id=fathername.id' at line 1
+mysql> select * from studentdetails inner join fathername on studentdetails.id=fathername.id;
++-------+----+-----------+-------+------+--------------------+-------+
+| name  | id | address   | marks | id   | fathername         | fees  |
++-------+----+-----------+-------+------+--------------------+-------+
+| jyoti |  1 | rajasthan |   100 |    1 | ashok kumar        | 23000 |
+| payal | 98 | hyderabad |   100 |   98 | babaji charandas   | 30000 |
+| rani  |  2 | hyderabad |    25 |    2 | heera kumar bharti | 28000 |
++-------+----+-----------+-------+------+--------------------+-------+
+3 rows in set (0.00 sec)
